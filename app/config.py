@@ -11,6 +11,8 @@ class Settings(BaseSettings):
 
     kafka_bootstrap_server: str = "localhost:9092"
 
+    port: int = 8000
+
     model_config = SettingsConfigDict(env_file=".env")
 
 

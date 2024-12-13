@@ -1,3 +1,4 @@
+import os
 import argparse
 import uuid
 import random
@@ -5,8 +6,13 @@ from typing import List
 import asyncio
 import aiohttp
 import logging
+from dotenv import load_dotenv
+
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
+
+PORT = os.getenv("PORT", 8000)
 
 
 def generate_value():
@@ -34,7 +40,7 @@ async def send_to_api(session: aiohttp.ClientSession, url: str, data: List[str])
 
 
 async def send_test_data(data: List[str], chunk: int):
-    url = "http://localhost:8000/dataset"
+    url = f"http://localhost:{PORT}/dataset"
     async with aiohttp.ClientSession() as session:
         tasks = []
         for i in range(0, len(data), chunk):

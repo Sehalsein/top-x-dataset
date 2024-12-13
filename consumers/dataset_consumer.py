@@ -7,7 +7,7 @@ from app.constants import KafkaTopic, RedisKey
 
 items: List[str] = []
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 
 def consumer(message: str):
