@@ -5,3 +5,6 @@ dev:
 
 consumer:
 	source .venv/bin/activate && PYTHONPATH=./ python consumers/dataset_consumer.py
+
+ingest:
+	source .venv/bin/activate && python scripts/ingest_data.py $(ARGS)

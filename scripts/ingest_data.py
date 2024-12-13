@@ -55,7 +55,7 @@ if __name__ == "__main__":
         description="Generate test data for the data ingestion pipeline"
     )
     parser.add_argument(
-        "--size", type=int, default=1000000, help="Number of records to generate"
+        "--size", type=int, default=100000, help="Number of records to generate"
     )
     parser.add_argument("--chunk", type=int, default=1000, help="Chunk size for api")
 
