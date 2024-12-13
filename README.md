@@ -96,13 +96,25 @@ curl --location --request DELETE 'http://localhost:8000/dataset'
 
 ## Performance Optimizations
 
-- **Stream Processing**: Kafka enables parallel processing of data
-- **Redis Sorted Sets**: Efficient maintenance of top X values
+- **Stream Processing**: Utilize Kafka for parallel data processing.
+- **Redis Sorted Sets**: Efficiently manage and maintain top X values.
 
-### Activating the Profiler
+### Time Complexity
+
+- POST /dataset - O(N) each item is sent to kafka for processing
+- GET /dataset - O(log(N) + M) with N being the number of elements in the sorted set and M the number of elements returned.
+
+### Space Complexity
+
+- POST /dataset - O(N) where N is the no of items
+- GET /dataset - O(M) where M is the number of elements returned
+
+### Enabling Profiling
 
 To enable profiling, add the following line to your `.env` file:
 
 ```plaintext
 PROFILING=true
 ```
+
+For production-level profiling and performance monitoring, tools like [Sentry](https://sentry.io/welcome/) or [New Relic](https://newrelic.com/) are very useful. These tools provide detailed insights and metrics to help analyze and optimize the application's real-world performance.
