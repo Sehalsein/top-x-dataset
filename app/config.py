@@ -13,6 +13,8 @@ class Settings(BaseSettings):
 
     port: int = 8000
 
+    profiling: bool = False
+
     model_config = SettingsConfigDict(env_file=".env")
 
 

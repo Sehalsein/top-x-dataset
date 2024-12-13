@@ -10,6 +10,7 @@ from .utils.kafka import (
     Producer as KafkaProducer,
     create_topic as kafka_create_topic,
 )
+from .middleware.performance import register_performance_middleware
 
 kafka_producer = KafkaProducer()
 
@@ -22,6 +23,9 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 settings = get_settings()
+
+
+register_performance_middleware(app)
 
 
 @app.get("/")

@@ -23,7 +23,7 @@
 2. **Start the FastAPI server**:
 
    ```bash
-   make dev
+   make start
    ```
 
 3. **Start Kafka consumers**:
@@ -98,3 +98,11 @@ curl --location --request DELETE 'http://localhost:8000/dataset'
 
 - **Stream Processing**: Kafka enables parallel processing of data
 - **Redis Sorted Sets**: Efficient maintenance of top X values
+
+### Activating the Profiler
+
+To enable profiling, add the following line to your `.env` file:
+
+```plaintext
+PROFILING=true
+```
