@@ -20,13 +20,19 @@
    docker-compose up --build
    ```
 
-2. **Start the FastAPI server**:
+2. **Install packages**:
+
+   ```bash
+   make install
+   ```
+
+3. **Start the FastAPI server**:
 
    ```bash
    make start
    ```
 
-3. **Start Kafka consumers**:
+4. **Start Kafka consumers**:
 
    ```bash
    make consumer
@@ -34,7 +40,7 @@
 
    You can start multiple consumers, and the data stream will be evenly distributed among all active consumers.
 
-4. **Generate Test Data**:
+5. **Generate Test Data**:
 
    To ingest data:
 
@@ -80,10 +86,10 @@ Retrieve dataset items, ordered by value.
 
 To return the top X records, set the `limit` parameter.
 
-For example, to return the top 10 records:
+For example, to return the top 3 records:
 
 ```bash
-curl --location 'http://localhost:8000/dataset?limit=10'
+curl --location 'http://localhost:8000/dataset?limit=3'
 ```
 
 ### DELETE - /dataset
