@@ -1,0 +1,1 @@
+PYTHONPATH=./ python consumers/dataset_consumer.py
