@@ -1,8 +1,8 @@
 from typing import List, Tuple
 import logging
 
-from app.lib.kafka import consume as kafka_consume, create_topic as kafka_create_topic
-from app.lib.redis import client as redis
+from app.utils.kafka import Consumer as KafkaConsumer
+from app.utils.redis import client as redis
 from app.constants import KafkaTopic, RedisKey
 
 items: List[str] = []
@@ -10,7 +10,7 @@ items: List[str] = []
 logging.basicConfig(level=logging.DEBUG)
 
 
-def consumer(message: str):
+def process_message(message: str):
     """Process incoming messages"""
     try:
         logging.debug(f"Processing message: {message}")
@@ -40,6 +40,15 @@ def update_store(key: str, score: int) -> None:
 
 
 if __name__ == "__main__":
-    kafka_create_topic(KafkaTopic.DATASET.value)
     logging.info(f"Starting consumer for topic:{KafkaTopic.DATASET.value}...")
-    kafka_consume(topics=[KafkaTopic.DATASET.value], on_message=consumer)
+    kafka_consumer = KafkaConsumer(
+        topics=[KafkaTopic.DATASET.value], on_message=process_message
+    )
+    try:
+        kafka_consumer.consume()
+    except KeyboardInterrupt:
+        logging.info("Shutting down consumer...")
+    except Exception as e:
+        logging.error(f"Consumer error: {e}")
+    finally:
+        kafka_consumer.close()

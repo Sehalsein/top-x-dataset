@@ -5,12 +5,13 @@ from fastapi import FastAPI, HTTPException
 from .config import get_settings
 from .constants import KafkaTopic, RedisKey
 from .models import IngestDataRequest
-from .lib.redis import client as redis
-from .lib.kafka import (
-    publish as kafka_publish,
-    flush_messages as kafka_flush,
+from .utils.redis import client as redis
+from .utils.kafka import (
+    Producer as KafkaProducer,
     create_topic as kafka_create_topic,
 )
+
+kafka_producer = KafkaProducer()
 
 
 @asynccontextmanager
@@ -39,10 +40,10 @@ async def post_dataset(data: IngestDataRequest):
 
     try:
         for line in data.items:
-            kafka_publish(KafkaTopic.DATASET.value, line)
+            kafka_producer.publish(KafkaTopic.DATASET.value, line)
             records_processed += 1
 
-        kafka_flush()
+        kafka_producer.flush()
     except Exception as e:
         logging.error(f"Error while processing dataset: {e}")
         raise HTTPException(
